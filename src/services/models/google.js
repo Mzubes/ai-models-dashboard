@@ -1,6 +1,4 @@
-import axios from 'axios';
-
-const GOOGLE_AI_API_URL = 'https://generativelanguage.googleapis.com/v1';
+// Removed axios import since it's not being used
 
 export const fetchGoogleModels = async (apiKey) => {
   if (!apiKey) {
@@ -29,7 +27,7 @@ export const sendGoogleQuery = async (apiKey, modelId, prompt, parameters) => {
   try {
     // This would be the actual API call in production
     // const response = await axios.post(
-    //   `${GOOGLE_AI_API_URL}/models/${modelId}:generateContent`,
+    //   `https://generativelanguage.googleapis.com/v1/models/${modelId}:generateContent`,
     //   {
     //     contents: [{ parts: [{ text: prompt }] }],
     //     generationConfig: parameters,
