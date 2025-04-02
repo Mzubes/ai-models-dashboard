@@ -1,8 +1,4 @@
-// src/services/models/openai.js - Fixed version
-import axios from 'axios';
-
-// Remove or comment out the unused variable, or use it in the code
-// const OPENAI_API_URL = 'https://api.openai.com/v1';
+// Removed axios import since it's not being used
 
 export const fetchOpenAIModels = async (apiKey) => {
   if (!apiKey) {
@@ -11,13 +7,6 @@ export const fetchOpenAIModels = async (apiKey) => {
 
   try {
     // This is a mock implementation - in production you'd use the actual API
-    // For a real implementation, you would uncomment and use the URL:
-    // const response = await axios.get(`https://api.openai.com/v1/models`, {
-    //   headers: {
-    //     'Authorization': `Bearer ${apiKey}`,
-    //   },
-    // });
-    
     // For demo purposes, return hardcoded models
     return [
       { id: 'gpt-4o', name: 'GPT-4o', description: 'Most capable model for complex tasks', maxTokens: 128000 },
@@ -39,7 +28,7 @@ export const sendOpenAIQuery = async (apiKey, modelId, prompt, parameters) => {
   try {
     // This would be the actual API call in production
     // const response = await axios.post(
-    //   `https://api.openai.com/v1/chat/completions`,
+    //   'https://api.openai.com/v1/chat/completions',
     //   {
     //     model: modelId,
     //     messages: [{ role: 'user', content: prompt }],
