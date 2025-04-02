@@ -1,6 +1,4 @@
-import axios from 'axios';
-
-const ANTHROPIC_API_URL = 'https://api.anthropic.com/v1';
+// Removed axios import since it's not being used
 
 export const fetchAnthropicModels = async (apiKey) => {
   if (!apiKey) {
@@ -29,7 +27,7 @@ export const sendAnthropicQuery = async (apiKey, modelId, prompt, parameters) =>
   try {
     // This would be the actual API call in production
     // const response = await axios.post(
-    //   `${ANTHROPIC_API_URL}/messages`,
+    //   'https://api.anthropic.com/v1/messages',
     //   {
     //     model: modelId,
     //     messages: [{ role: 'user', content: prompt }],
