@@ -1,6 +1,8 @@
+// src/services/models/openai.js - Fixed version
 import axios from 'axios';
 
-const OPENAI_API_URL = 'https://api.openai.com/v1';
+// Remove or comment out the unused variable, or use it in the code
+// const OPENAI_API_URL = 'https://api.openai.com/v1';
 
 export const fetchOpenAIModels = async (apiKey) => {
   if (!apiKey) {
@@ -9,7 +11,8 @@ export const fetchOpenAIModels = async (apiKey) => {
 
   try {
     // This is a mock implementation - in production you'd use the actual API
-    // const response = await axios.get(`${OPENAI_API_URL}/models`, {
+    // For a real implementation, you would uncomment and use the URL:
+    // const response = await axios.get(`https://api.openai.com/v1/models`, {
     //   headers: {
     //     'Authorization': `Bearer ${apiKey}`,
     //   },
@@ -36,7 +39,7 @@ export const sendOpenAIQuery = async (apiKey, modelId, prompt, parameters) => {
   try {
     // This would be the actual API call in production
     // const response = await axios.post(
-    //   `${OPENAI_API_URL}/chat/completions`,
+    //   `https://api.openai.com/v1/chat/completions`,
     //   {
     //     model: modelId,
     //     messages: [{ role: 'user', content: prompt }],
