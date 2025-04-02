@@ -40,10 +40,11 @@ jobs:
         id: pages
         uses: actions/configure-pages@v2
       
-      - name: Upload pages artifact
-        uses: actions/upload-pages-artifact@v1
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
         with:
-          path: ./build
+          name: artifact-name
+          path: path/to/artifact
       
       - name: Deploy to GitHub Pages
         id: deployment
