@@ -1,3 +1,4 @@
+// src/components/history/HistoryList.js
 import React, { useState } from 'react';
 import { ArrowPathIcon, TrashIcon, TagIcon, ArrowsRightLeftIcon } from '@heroicons/react/24/outline';
 
@@ -81,7 +82,7 @@ const HistoryList = ({ historyItems, categories, onAssignCategory, onDeleteItem,
                 className="p-1 text-red-500 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300"
                 onClick={(e) => {
                   e.stopPropagation();
-                  if (confirm('Are you sure you want to delete this item?')) {
+                  if (window.confirm('Are you sure you want to delete this item?')) {
                     onDeleteItem(item.id);
                   }
                 }}
