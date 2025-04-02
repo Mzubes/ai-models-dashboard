@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import UsageMetrics from '../components/analytics/UsageMetrics';
 import CostAnalysis from '../components/analytics/CostAnalysis';
 import PerformanceCharts from '../components/analytics/PerformanceCharts';
@@ -10,31 +10,8 @@ const Analytics = () => {
   const [performanceData, setPerformanceData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    // In a real application, this would fetch data from your backend
-    const fetchAnalyticsData = async () => {
-      setIsLoading(true);
-      try {
-        // Simulate API call delay
-        await new Promise(resolve => setTimeout(resolve, 800));
-        
-        // Generate mock data based on the selected time range
-        const { mockUsageData, mockCostData, mockPerformanceData } = generateMockData(timeRange);
-        
-        setUsageData(mockUsageData);
-        setCostData(mockCostData);
-        setPerformanceData(mockPerformanceData);
-      } catch (error) {
-        console.error('Error fetching analytics data:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchAnalyticsData();
-  }, [timeRange]);
-
-  const generateMockData = (range) => {
+  // Use useCallback to memoize the generateMockData function
+  const generateMockData = useCallback((range) => {
     let dataPoints;
     let dateFormat;
     
@@ -144,7 +121,7 @@ const Analytics = () => {
     };
     
     return { mockUsageData, mockCostData, mockPerformanceData };
-  };
+  }, []);
   
   const generateDateLabels = (count, format) => {
     const labels = [];
@@ -174,6 +151,30 @@ const Analytics = () => {
     
     return labels;
   };
+
+  useEffect(() => {
+    // In a real application, this would fetch data from your backend
+    const fetchAnalyticsData = async () => {
+      setIsLoading(true);
+      try {
+        // Simulate API call delay
+        await new Promise(resolve => setTimeout(resolve, 800));
+        
+        // Generate mock data based on the selected time range
+        const { mockUsageData, mockCostData, mockPerformanceData } = generateMockData(timeRange);
+        
+        setUsageData(mockUsageData);
+        setCostData(mockCostData);
+        setPerformanceData(mockPerformanceData);
+      } catch (error) {
+        console.error('Error fetching analytics data:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchAnalyticsData();
+  }, [timeRange, generateMockData]);
 
   return (
     <div className="container mx-auto">
