@@ -1,4 +1,4 @@
-// src/components/history/CategoryManager.js
+// src/components/history/CategoryManager.js - Fixed version
 import React, { useState } from 'react';
 import { PlusIcon, XMarkIcon } from '@heroicons/react/24/outline';
 
@@ -76,7 +76,8 @@ const CategoryManager = ({
             <button
               className="p-1 ml-1 text-gray-500 hover:text-red-600 dark:text-gray-400 dark:hover:text-red-400"
               onClick={() => {
-                if (confirm(`Are you sure you want to delete the category "${category}"?`)) {
+                // Fixed line - using window.confirm instead of just confirm
+                if (window.confirm(`Are you sure you want to delete the category "${category}"?`)) {
                   onDeleteCategory(category);
                 }
               }}
