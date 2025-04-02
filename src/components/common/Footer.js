@@ -16,12 +16,12 @@ const Footer = () => {
           >
             GitHub
           </a>
-          <a 
-            href="#" 
+          {/* Fix: Replace # with a valid URL or use button instead */}
+          <button 
             className="text-sm text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
           >
             Documentation
-          </a>
+          </button>
         </div>
       </div>
     </footer>
