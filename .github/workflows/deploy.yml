@@ -11,7 +11,7 @@ permissions:
   pages: write
   id-token: write
 
-# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+# Allow only one concurrent deployment
 concurrency:
   group: "pages"
   cancel-in-progress: false
@@ -40,6 +40,7 @@ jobs:
         uses: actions/configure-pages@v3
       
       - name: Upload artifact
+        # Use the correct action name and version
         uses: actions/upload-pages-artifact@v1
         with:
           path: 'build'
