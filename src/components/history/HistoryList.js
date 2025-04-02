@@ -1,8 +1,10 @@
 // src/components/history/HistoryList.js
 import React, { useState } from 'react';
-import { ArrowPathIcon, TrashIcon, TagIcon, ArrowsRightLeftIcon } from '@heroicons/react/24/outline';
+import { TrashIcon, TagIcon, ArrowsRightLeftIcon } from '@heroicons/react/24/outline';
+// Removed unused ArrowPathIcon
 
 const HistoryList = ({ historyItems, categories, onAssignCategory, onDeleteItem, onViewInComparison }) => {
+  // Rest of the code stays the same
   const [expandedItems, setExpandedItems] = useState({});
   
   const toggleExpand = (id) => {
