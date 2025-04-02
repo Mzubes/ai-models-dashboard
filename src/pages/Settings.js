@@ -1,3 +1,4 @@
+// src/pages/Settings.js - Fixed version
 import React, { useState, useEffect } from 'react';
 import { useTheme } from '../contexts/ThemeContext';
 import { getModelProviders } from '../services/models/modelRegistry';
@@ -47,7 +48,8 @@ const Settings = () => {
   };
 
   const clearApiKey = (providerId) => {
-    if (confirm(`Are you sure you want to remove the API key for ${providerId}?`)) {
+    // Using window.confirm instead of direct confirm call
+    if (window.confirm(`Are you sure you want to remove the API key for ${providerId}?`)) {
       localStorage.removeItem(`${providerId}_api_key`);
       
       setApiKeys(prev => ({
@@ -61,7 +63,8 @@ const Settings = () => {
   };
 
   const clearAllData = () => {
-    if (confirm('Are you sure you want to clear all application data? This will remove all your history, categories, and settings.')) {
+    // Using window.confirm instead of direct confirm call
+    if (window.confirm('Are you sure you want to clear all application data? This will remove all your history, categories, and settings.')) {
       localStorage.clear();
       setSuccessMessage('All application data has been cleared. The page will reload.');
       setTimeout(() => window.location.reload(), 2000);
