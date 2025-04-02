@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useModels } from '../contexts/ModelContext';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import DiffHighlighter from '../components/comparison/DiffHighlighter';
 import EvaluationTools from '../components/comparison/EvaluationTools';
 import { sendQuery } from '../services/api';
 
 const Comparison = () => {
-  const navigate = useNavigate();
   const location = useLocation();
   const { models, selectedModels } = useModels();
   const [prompt, setPrompt] = useState('');
