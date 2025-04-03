@@ -1,6 +1,4 @@
-// src/components/analytics/CostAnalysis.js
 import React from 'react';
-import { Bar } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -10,6 +8,7 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
+import { Bar } from 'react-chartjs-2';
 
 // Register ChartJS components
 ChartJS.register(
