@@ -1,6 +1,9 @@
 import { sendOpenAIQuery } from './models/openai';
 import { sendAnthropicQuery } from './models/anthropic';
 import { sendGoogleQuery } from './models/google';
+import { sendMistralQuery } from './models/mistral';
+import { sendMetaQuery } from './models/meta';
+import { sendPerplexityQuery } from './models/perplexity';
 
 // Central API request handler
 export const sendQuery = async (providerType, modelId, prompt, parameters) => {
@@ -20,6 +23,12 @@ export const sendQuery = async (providerType, modelId, prompt, parameters) => {
         return await sendAnthropicQuery(apiKey, modelId, prompt, parameters);
       case 'google':
         return await sendGoogleQuery(apiKey, modelId, prompt, parameters);
+      case 'meta':
+        return await sendMetaQuery(apiKey, modelId, prompt, parameters);
+      case 'mistral':
+        return await sendMistralQuery(apiKey, modelId, prompt, parameters);
+      case 'perplexity':
+        return await sendPerplexityQuery(apiKey, modelId, prompt, parameters);
       default:
         throw new Error(`Unsupported provider type: ${providerType}`);
     }
