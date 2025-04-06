@@ -1,6 +1,9 @@
 import { fetchOpenAIModels } from './openai';
 import { fetchAnthropicModels } from './anthropic';
 import { fetchGoogleModels } from './google';
+import { fetchMistralModels } from './mistral';
+import { fetchMetaModels } from './meta';
+import { fetchPerplexityModels } from './perplexity';
 
 // Model registry - centralized place to manage AI model connections
 const modelProviders = [
@@ -23,6 +26,27 @@ const modelProviders = [
     name: 'Google AI', 
     fetchModels: fetchGoogleModels,
     logoUrl: '/logos/google.svg',
+    apiKeyRequired: true,
+  },
+  { 
+    id: 'meta', 
+    name: 'Meta AI', 
+    fetchModels: fetchMetaModels,
+    logoUrl: '/logos/meta.svg',
+    apiKeyRequired: true,
+  },
+  { 
+    id: 'mistral', 
+    name: 'Mistral AI', 
+    fetchModels: fetchMistralModels,
+    logoUrl: '/logos/mistral.svg',
+    apiKeyRequired: true,
+  },
+  { 
+    id: 'perplexity', 
+    name: 'Perplexity AI', 
+    fetchModels: fetchPerplexityModels,
+    logoUrl: '/logos/perplexity.svg',
     apiKeyRequired: true,
   },
 ];
