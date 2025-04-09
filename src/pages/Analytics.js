@@ -13,126 +13,174 @@ const Analytics = () => {
 
   // Use useCallback to memoize the generateMockData function
   const generateMockData = useCallback((range) => {
-    let dataPoints;
-    let dateFormat;
-    
-    try {
-      // Determine how many data points to generate based on time range
-      switch (range) {
-        case 'day':
-          dataPoints = 24; // Hours in a day
-          dateFormat = 'hour';
-          break;
-        case 'week':
-          dataPoints = 7; // Days in a week
-          dateFormat = 'day';
-          break;
-        case 'month':
-          dataPoints = 30; // Approx. days in a month
-          dateFormat = 'day';
-          break;
-        case 'year':
-          dataPoints = 12; // Months in a year
-          dateFormat = 'month';
-          break;
-        default:
-          dataPoints = 30;
-          dateFormat = 'day';
-      }
-      
-      // Generate dates for the data points
-      const dates = generateDateLabels(dataPoints, dateFormat);
-      
-      // Generate mock usage data
-      const mockUsageData = {
-        labels: dates,
-        datasets: [
-          {
-            label: 'OpenAI GPT-4o',
-            data: Array.from({ length: dataPoints }, () => Math.floor(Math.random() * 100) + 50),
-            borderColor: 'rgba(75, 192, 192, 1)',
-            backgroundColor: 'rgba(75, 192, 192, 0.2)',
-          },
-          {
-            label: 'Anthropic Claude 3',
-            data: Array.from({ length: dataPoints }, () => Math.floor(Math.random() * 80) + 40),
-            borderColor: 'rgba(153, 102, 255, 1)',
-            backgroundColor: 'rgba(153, 102, 255, 0.2)',
-          },
-          {
-            label: 'Google Gemini',
-            data: Array.from({ length: dataPoints }, () => Math.floor(Math.random() * 60) + 30),
-            borderColor: 'rgba(255, 159, 64, 1)',
-            backgroundColor: 'rgba(255, 159, 64, 0.2)',
-          },
-        ],
-        totalQueries: Math.floor(Math.random() * 5000) + 3000,
-        averageTokens: Math.floor(Math.random() * 500) + 800,
-      };
-      
-      // Generate mock cost data
-      const mockCostData = {
-        labels: dates,
-        datasets: [
-          {
-            label: 'OpenAI GPT-4o',
-            data: Array.from({ length: dataPoints }, () => parseFloat((Math.random() * 2 + 1).toFixed(2))),
-            borderColor: 'rgba(75, 192, 192, 1)',
-            backgroundColor: 'rgba(75, 192, 192, 0.2)',
-          },
-          {
-            label: 'Anthropic Claude 3',
-            data: Array.from({ length: dataPoints }, () => parseFloat((Math.random() * 1.5 + 0.8).toFixed(2))),
-            borderColor: 'rgba(153, 102, 255, 1)',
-            backgroundColor: 'rgba(153, 102, 255, 0.2)',
-          },
-          {
-            label: 'Google Gemini',
-            data: Array.from({ length: dataPoints }, () => parseFloat((Math.random() * 1 + 0.5).toFixed(2))),
-            borderColor: 'rgba(255, 159, 64, 1)',
-            backgroundColor: 'rgba(255, 159, 64, 0.2)',
-          },
-        ],
-        totalCost: parseFloat((Math.random() * 100 + 50).toFixed(2)),
-        costProjection: parseFloat((Math.random() * 150 + 100).toFixed(2)),
-      };
-      
-      // Generate mock performance data
-      const mockPerformanceData = {
-        models: ['OpenAI GPT-4o', 'Anthropic Claude 3', 'Google Gemini'],
-        accuracy: [
-          parseFloat((Math.random() * 2 + 8).toFixed(1)),
-          parseFloat((Math.random() * 2 + 7.5).toFixed(1)),
-          parseFloat((Math.random() * 2 + 7).toFixed(1)),
-        ],
-        relevance: [
-          parseFloat((Math.random() * 2 + 8).toFixed(1)),
-          parseFloat((Math.random() * 2 + 8).toFixed(1)),
-          parseFloat((Math.random() * 2 + 7.5).toFixed(1)),
-        ],
-        clarity: [
-          parseFloat((Math.random() * 1 + 8.5).toFixed(1)),
-          parseFloat((Math.random() * 1 + 8).toFixed(1)),
-          parseFloat((Math.random() * 1 + 7.5).toFixed(1)),
-        ],
-        responseTime: [
-          parseFloat((Math.random() * 500 + 800).toFixed(0)),
-          parseFloat((Math.random() * 400 + 900).toFixed(0)),
-          parseFloat((Math.random() * 300 + 600).toFixed(0)),
-        ],
-      };
-      
-      return { mockUsageData, mockCostData, mockPerformanceData };
-    } catch (error) {
-      console.error("Error in generateMockData:", error);
-      setError("Failed to generate analytics data. Please try again later.");
-      return { 
-        mockUsageData: {labels: [], datasets: [], totalQueries: 0, averageTokens: 0}, 
-        mockCostData: {labels: [], datasets: [], totalCost: 0, costProjection: 0}, 
-        mockPerformanceData: {models: [], accuracy: [], relevance: [], clarity: [], responseTime: []} 
-      };
+  let dataPoints;
+  let dateFormat;
+
+  try {
+    // Determine how many data points to generate based on time range
+    switch (range) {
+      case 'day':
+        dataPoints = 24; // Hours in a day
+        dateFormat = 'hour';
+        break;
+      case 'week':
+        dataPoints = 7; // Days in a week
+        dateFormat = 'day';
+        break;
+      case 'month':
+        dataPoints = 30; // Approx. days in a month
+        dateFormat = 'day';
+        break;
+      case 'year':
+        dataPoints = 12; // Months in a year
+        dateFormat = 'month';
+        break;
+      default:
+        dataPoints = 30;
+        dateFormat = 'day';
     }
-  }, []);
+
+    // Generate dates for the data points
+    const dates = generateDateLabels(dataPoints, dateFormat);
+
+    // Generate mock usage data
+    const mockUsageData = {
+      labels: dates,
+      datasets: [
+        {
+          label: 'OpenAI GPT-4o',
+          data: Array.from({ length: dataPoints }, () => Math.floor(Math.random() * 100) + 50),
+          borderColor: 'rgba(75, 192, 192, 1)',
+          backgroundColor: 'rgba(75, 192, 192, 0.2)',
+        },
+        {
+          label: 'Anthropic Claude 3',
+          data: Array.from({ length: dataPoints }, () => Math.floor(Math.random() * 80) + 40),
+          borderColor: 'rgba(153, 102, 255, 1)',
+          backgroundColor: 'rgba(153, 102, 255, 0.2)',
+        },
+        {
+          label: 'Google Gemini',
+          data: Array.from({ length: dataPoints }, () => Math.floor(Math.random() * 60) + 30),
+          borderColor: 'rgba(255, 159, 64, 1)',
+          backgroundColor: 'rgba(255, 159, 64, 0.2)',
+        },
+        {
+          label: 'Meta',
+          data: Array.from({ length: dataPoints }, () => Math.floor(Math.random() * 80) + 30),
+          borderColor: 'rgba(255, 206, 86, 1)',
+          backgroundColor: 'rgba(255, 206, 86, 0.2)',
+        },
+        {
+          label: 'Mistral',
+          data: Array.from({ length: dataPoints }, () => Math.floor(Math.random() * 70) + 20),
+          borderColor: 'rgba(75, 192, 192, 1)',
+          backgroundColor: 'rgba(75, 192, 192, 0.2)',
+        },
+        {
+          label: 'Perplexity',
+          data: Array.from({ length: dataPoints }, () => Math.floor(Math.random() * 50) + 10),
+          borderColor: 'rgba(54, 162, 235, 1)',
+          backgroundColor: 'rgba(54, 162, 235, 0.2)',
+        },
+      ],
+      totalQueries: Math.floor(Math.random() * 5000) + 3000,
+      averageTokens: Math.floor(Math.random() * 500) + 800,
+    };
+
+    // Generate mock cost data
+    const mockCostData = {
+      labels: dates,
+      datasets: [
+        {
+          label: 'OpenAI GPT-4o',
+          data: Array.from({ length: dataPoints }, () => parseFloat((Math.random() * 2 + 1).toFixed(2))),
+          borderColor: 'rgba(75, 192, 192, 1)',
+          backgroundColor: 'rgba(75, 192, 192, 0.2)',
+        },
+        {
+          label: 'Anthropic Claude 3',
+          data: Array.from({ length: dataPoints }, () => parseFloat((Math.random() * 1.5 + 0.8).toFixed(2))),
+          borderColor: 'rgba(153, 102, 255, 1)',
+          backgroundColor: 'rgba(153, 102, 255, 0.2)',
+        },
+        {
+          label: 'Google Gemini',
+          data: Array.from({ length: dataPoints }, () => parseFloat((Math.random() * 1 + 0.5).toFixed(2))),
+          borderColor: 'rgba(255, 159, 64, 1)',
+          backgroundColor: 'rgba(255, 159, 64, 0.2)',
+        },
+        {
+          label: 'Meta',
+          data: Array.from({ length: dataPoints }, () => parseFloat((Math.random() * 1.8 + 0.7).toFixed(2))),
+          borderColor: 'rgba(255, 206, 86, 1)',
+          backgroundColor: 'rgba(255, 206, 86, 0.2)',
+        },
+        {
+          label: 'Mistral',
+          data: Array.from({ length: dataPoints }, () => parseFloat((Math.random() * 1.2 + 0.5).toFixed(2))),
+          borderColor: 'rgba(75, 192, 192, 1)',
+          backgroundColor: 'rgba(75, 192, 192, 0.2)',
+        },
+        {
+          label: 'Perplexity',
+          data: Array.from({ length: dataPoints }, () => parseFloat((Math.random() * 0.8 + 0.3).toFixed(2))),
+          borderColor: 'rgba(54, 162, 235, 1)',
+          backgroundColor: 'rgba(54, 162, 235, 0.2)',
+        },
+      ],
+      totalCost: parseFloat((Math.random() * 100 + 50).toFixed(2)),
+      costProjection: parseFloat((Math.random() * 150 + 100).toFixed(2)),
+    };
+
+    // Generate mock performance data
+    const mockPerformanceData = {
+      models: ['OpenAI GPT-4o', 'Anthropic Claude 3', 'Google Gemini', 'Meta', 'Mistral', 'Perplexity'],
+      accuracy: [
+        parseFloat((Math.random() * 2 + 8).toFixed(1)),
+        parseFloat((Math.random() * 2 + 7.5).toFixed(1)),
+        parseFloat((Math.random() * 2 + 7).toFixed(1)),
+        parseFloat((Math.random() * 2 + 8.5).toFixed(1)), // Meta
+        parseFloat((Math.random() * 2 + 7.8).toFixed(1)), // Mistral
+        parseFloat((Math.random() * 2 + 7.3).toFixed(1)), // Perplexity
+      ],
+      relevance: [
+        parseFloat((Math.random() * 2 + 8).toFixed(1)),
+        parseFloat((Math.random() * 2 + 8).toFixed(1)),
+        parseFloat((Math.random() * 2 + 7.5).toFixed(1)),
+        parseFloat((Math.random() * 2 + 8.2).toFixed(1)), // Meta
+        parseFloat((Math.random() * 2 + 7.7).toFixed(1)), // Mistral
+        parseFloat((Math.random() * 2 + 7.2).toFixed(1)), // Perplexity
+      ],
+      clarity: [
+        parseFloat((Math.random() * 1 + 8.5).toFixed(1)),
+        parseFloat((Math.random() * 1 + 8).toFixed(1)),
+        parseFloat((Math.random() * 1 + 7.5).toFixed(1)),
+        parseFloat((Math.random() * 1 + 8.4).toFixed(1)), // Meta
+        parseFloat((Math.random() * 1 + 7.8).toFixed(1)), // Mistral
+        parseFloat((Math.random() * 1 + 7.4).toFixed(1)), // Perplexity
+      ],
+      responseTime: [
+        parseFloat((Math.random() * 500 + 800).toFixed(0)),
+        parseFloat((Math.random() * 400 + 900).toFixed(0)),
+        parseFloat((Math.random() * 300 + 600).toFixed(0)),
+        parseFloat((Math.random() * 400 + 700).toFixed(0)), // Meta
+        parseFloat((Math.random() * 300 + 650).toFixed(0)), // Mistral
+        parseFloat((Math.random() * 250 + 600).toFixed(0)), // Perplexity
+      ],
+    };
+
+    return { mockUsageData, mockCostData, mockPerformanceData };
+  } catch (error) {
+    console.error("Error in generateMockData:", error);
+    setError("Failed to generate analytics data. Please try again later.");
+    return {
+      mockUsageData: { labels: [], datasets: [], totalQueries: 0, averageTokens: 0 },
+      mockCostData: { labels: [], datasets: [], totalCost: 0, costProjection: 0 },
+      mockPerformanceData: { models: [], accuracy: [], relevance: [], clarity: [], responseTime: [] },
+    };
+  }
+}, []);
   
   const generateDateLabels = (count, format) => {
     try {
