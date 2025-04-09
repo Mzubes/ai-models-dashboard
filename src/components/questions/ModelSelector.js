@@ -1,86 +1,56 @@
-import React from 'react';
-import { useModels } from '../../contexts/ModelContext';
+import React, { useState, useEffect } from 'react';
 
-const ModelSelector = () => {
-  const { 
-    models, 
-    selectedModels, 
-    toggleModelSelection, 
-    selectAllModels, 
-    clearModelSelection 
-  } = useModels();
+const ModelSelector = ({ models, selectedModels, setSelectedModels }) => {
+  const [search, setSearch] = useState('');
+  const [filteredModels, setFilteredModels] = useState(models);
 
-  // Group models by provider
-  const groupedModels = models.reduce((acc, model) => {
-    if (!acc[model.provider]) {
-      acc[model.provider] = [];
+  useEffect(() => {
+    setFilteredModels(
+      models.filter(m =>
+        m.name.toLowerCase().includes(search.toLowerCase())
+      )
+    );
+  }, [search, models]);
+
+  const toggleSelect = (modelId) => {
+    if (selectedModels.includes(modelId)) {
+      setSelectedModels(selectedModels.filter(id => id !== modelId));
+    } else {
+      setSelectedModels([...selectedModels, modelId]);
     }
-    acc[model.provider].push(model);
-    return acc;
-  }, {});
+  };
 
   return (
-    <div className="space-y-4">
-      <div className="flex justify-between mb-4">
-        <button
-          className="text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
-          onClick={selectAllModels}
-        >
-          Select All
-        </button>
-        <button
-          className="text-sm text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300"
-          onClick={clearModelSelection}
-        >
-          Clear All
-        </button>
-      </div>
-      
-      {Object.entries(groupedModels).map(([provider, providerModels]) => (
-        <div key={provider} className="mb-4">
-          <h3 className="text-md font-medium mb-2 text-gray-700 dark:text-gray-300 capitalize">
-            {provider}
-          </h3>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
-            {providerModels.map((model) => (
-              <div
-                key={model.id}
-                className={`
-                  border rounded-md p-3 cursor-pointer transition-colors
-                  ${
-                    selectedModels.includes(model.id)
-                      ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/30 dark:border-blue-400'
-                      : 'border-gray-200 hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-700'
-                  }
-                  ${!model.isAvailable ? 'opacity-50 cursor-not-allowed' : ''}
-                `}
-                onClick={() => model.isAvailable && toggleModelSelection(model.id)}
-              >
-                <div className="flex items-center justify-between">
-                  <div>
-                    <div className="font-medium text-gray-900 dark:text-white">{model.name}</div>
-                    {model.description && (
-                      <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                        {model.description}
-                      </div>
-                    )}
-                  </div>
-                  <div>
-                    <input
-                      type="checkbox"
-                      checked={selectedModels.includes(model.id)}
-                      onChange={() => model.isAvailable && toggleModelSelection(model.id)}
-                      className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-                      disabled={!model.isAvailable}
-                    />
-                  </div>
-                </div>
-              </div>
-            ))}
+    <div className="bg-gray-800 rounded-xl shadow-lg p-4 text-white">
+      <input
+        type="text"
+        placeholder="Search models..."
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        className="w-full p-2 mb-3 rounded-md bg-gray-700 border border-gray-600"
+      />
+
+      <div className="max-h-72 overflow-auto space-y-2">
+        {filteredModels.map(model => (
+          <div
+            key={model.id}
+            className={`flex items-center justify-between p-2 border rounded-lg cursor-pointer ${
+              selectedModels.includes(model.id)
+                ? 'border-blue-400 bg-gray-700'
+                : 'border-gray-600'
+            } ${!model.isAvailable ? 'opacity-50' : ''}`}
+            onClick={() => model.isAvailable && toggleSelect(model.id)}
+          >
+            <div className="flex items-center gap-2">
+              <img src={model.logoUrl} alt="logo" className="h-6 w-6 rounded-md" />
+              <span>{model.name}</span>
+            </div>
+            {!model.isAvailable && (
+              <span className="text-xs text-red-400">Not Configured</span>
+            )}
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 };
