@@ -3,24 +3,33 @@ import React from 'react';
 const ParameterControls = ({ parameters, setParameters }) => {
   const handleChange = (e) => {
     const { name, value } = e.target;
-    
-    // Convert string inputs to numbers for numeric parameters
-    const parsedValue = name === 'temperature' || name === 'maxTokens' 
-      ? parseFloat(value) 
-      : value;
-    
-    setParameters(prev => ({
+
+    const parsedValue =
+      name === 'temperature' || name === 'maxTokens'
+        ? parseFloat(value)
+        : value;
+
+    setParameters((prev) => ({
       ...prev,
-      [name]: parsedValue
+      [name]: parsedValue,
     }));
   };
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {/* Temperature Slider */}
       <div>
-        <label htmlFor="temperature" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-          Temperature: {parameters.temperature}
-        </label>
+        <div className="flex justify-between items-center mb-1">
+          <label
+            htmlFor="temperature"
+            className="text-sm font-medium text-gray-700 dark:text-gray-300"
+          >
+            Temperature
+          </label>
+          <span className="text-xs font-mono bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded text-gray-800 dark:text-gray-200">
+            {parameters.temperature}
+          </span>
+        </div>
         <input
           type="range"
           id="temperature"
@@ -30,18 +39,27 @@ const ParameterControls = ({ parameters, setParameters }) => {
           step="0.1"
           value={parameters.temperature}
           onChange={handleChange}
-          className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
+          className="w-full h-2 appearance-none bg-gray-200 dark:bg-gray-700 rounded-full accent-blue-500"
         />
         <div className="flex justify-between text-xs text-gray-500 dark:text-gray-400 mt-1">
-          <span>Precise (0)</span>
-          <span>Creative (1)</span>
+          <span>Precise</span>
+          <span>Creative</span>
         </div>
       </div>
-      
+
+      {/* Max Tokens Slider */}
       <div>
-        <label htmlFor="maxTokens" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-          Max Output Tokens: {parameters.maxTokens}
-        </label>
+        <div className="flex justify-between items-center mb-1">
+          <label
+            htmlFor="maxTokens"
+            className="text-sm font-medium text-gray-700 dark:text-gray-300"
+          >
+            Max Output Tokens
+          </label>
+          <span className="text-xs font-mono bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded text-gray-800 dark:text-gray-200">
+            {parameters.maxTokens}
+          </span>
+        </div>
         <input
           type="range"
           id="maxTokens"
@@ -51,7 +69,7 @@ const ParameterControls = ({ parameters, setParameters }) => {
           step="100"
           value={parameters.maxTokens}
           onChange={handleChange}
-          className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
+          className="w-full h-2 appearance-none bg-gray-200 dark:bg-gray-700 rounded-full accent-indigo-500"
         />
         <div className="flex justify-between text-xs text-gray-500 dark:text-gray-400 mt-1">
           <span>Short</span>
