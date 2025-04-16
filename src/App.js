@@ -2,7 +2,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-import Sidebar from './components/Sidebar';
+import Sidebar from './components/common/Sidebar';
 import Dashboard from './pages/Dashboard';
 import Questions from './pages/Questions';
 import History from './pages/History';
