@@ -15,22 +15,26 @@ const ResponseCard = ({ response, modelName, providerLogo }) => {
   };
 
   return (
-    <div className="bg-gray-800 text-white rounded-xl shadow-lg p-4 mb-4">
-      <div className="flex items-center justify-between mb-3">
-        <div className="flex items-center gap-2">
+    <div className="bg-gray-800 text-slate-100 rounded-xl shadow-md p-6 space-y-4">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-3">
           <img src={providerLogo} alt="provider-logo" className="h-6 w-6 rounded-md" />
-          <span className="font-semibold">{modelName}</span>
+          <span className="font-semibold text-base">{modelName}</span>
         </div>
-        <button onClick={handleCopy} className="hover:text-green-400">
+        <button
+          onClick={handleCopy}
+          aria-label="Copy response"
+          className="p-1 text-slate-300 hover:text-green-400 transition-colors duration-150"
+        >
           {copied ? <Check size={18} /> : <Clipboard size={18} />}
         </button>
       </div>
 
-      <div className={`prose prose-invert ${expanded ? '' : 'max-h-48 overflow-hidden'}`}>
+      <div className={`prose prose-invert text-sm ${expanded ? '' : 'max-h-52 overflow-hidden'} transition-all duration-200`}>
         <ReactMarkdown
           remarkPlugins={[remarkGfm]}
           components={{
-            code({node, inline, className, children, ...props}) {
+            code({ node, inline, className, children, ...props }) {
               const match = /language-(\w+)/.exec(className || '')
               return !inline && match ? (
                 <SyntaxHighlighter language={match[1]} PreTag="div" {...props}>
@@ -40,8 +44,8 @@ const ResponseCard = ({ response, modelName, providerLogo }) => {
                 <code className={className} {...props}>
                   {children}
                 </code>
-              )
-            }
+              );
+            },
           }}
         >
           {response}
@@ -51,7 +55,7 @@ const ResponseCard = ({ response, modelName, providerLogo }) => {
       {response.length > 500 && (
         <button
           onClick={() => setExpanded(!expanded)}
-          className="text-blue-400 mt-2 underline"
+          className="text-blue-400 text-sm hover:underline transition"
         >
           {expanded ? 'Show Less' : 'Show More'}
         </button>
