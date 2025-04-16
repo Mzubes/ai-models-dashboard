@@ -1,39 +1,47 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-const QuestionInput = ({ value, onChange, onSubmit, isLoading }) => {
-  const handleChange = (e) => {
-    onChange(e.target.value);
-  };
+const QuestionInput = ({ onSubmit, loading }) => {
+  const [prompt, setPrompt] = useState('');
 
   const handleKeyDown = (e) => {
-    if (e.key === 'Enter' && e.ctrlKey) {
-      onSubmit();
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      if (prompt.trim() !== '') {
+        onSubmit(prompt);
+        setPrompt('');
+      }
+    }
+  };
+
+  const handleSubmit = () => {
+    if (prompt.trim() !== '') {
+      onSubmit(prompt);
+      setPrompt('');
     }
   };
 
   return (
-    <div className="flex flex-col space-y-4">
+    <div className="bg-gray-800 p-4 rounded-xl shadow-md">
       <textarea
-        className="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-        rows="5"
-        placeholder="Enter your question here..."
-        value={value}
-        onChange={handleChange}
+        value={prompt}
+        onChange={(e) => setPrompt(e.target.value)}
         onKeyDown={handleKeyDown}
-        disabled={isLoading}
-      ></textarea>
-      
-      <div className="flex items-center justify-between">
-        <div className="text-sm text-gray-500 dark:text-gray-400">
-          Press Ctrl+Enter to submit
-        </div>
-        
+        rows={4}
+        placeholder="Ask a question…"
+        className="w-full p-3 bg-gray-700 text-white rounded-md border border-gray-600 resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+      />
+
+      <div className="mt-3 flex justify-end">
         <button
-          className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50"
-          onClick={onSubmit}
-          disabled={isLoading || !value.trim()}
+          onClick={handleSubmit}
+          disabled={loading || prompt.trim() === ''}
+          className={`px-5 py-2 rounded-md font-medium ${
+            loading
+              ? 'bg-gray-600 text-gray-300 cursor-not-allowed'
+              : 'bg-blue-500 hover:bg-blue-600 text-white'
+          }`}
         >
-          {isLoading ? 'Sending...' : 'Send'}
+          {loading ? 'Generating...' : 'Submit'}
         </button>
       </div>
     </div>
