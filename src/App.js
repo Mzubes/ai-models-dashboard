@@ -2,12 +2,9 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import Sidebar from './components/layout/Sidebar';
-import Dashboard from './pages/Dashboard';
-import Questions from './pages/Questions';
-import History from './pages/History'; // Optional, if you have this
+import Dashboard from './pages/Dashboard'; // ⬅️ Make sure this file exists
+import Questions from './pages/Questions'; // ⬅️ And this one
 import { ModelProvider } from './contexts/ModelContext';
-
-import './index.css'; // Make sure Tailwind is configured
 
 const App = () => {
   return (
@@ -20,7 +17,8 @@ const App = () => {
             <Routes>
               <Route path="/" element={<Dashboard />} />
               <Route path="/questions" element={<Questions />} />
-              <Route path="/history" element={<History />} /> {/* Optional */}
+              {/* Add fallback here if needed */}
+              <Route path="*" element={<div className="text-red-500">Page not found</div>} />
             </Routes>
           </main>
         </div>
