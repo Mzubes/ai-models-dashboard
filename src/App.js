@@ -1,7 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-import Sidebar from './components/layout/Sidebar';
+- import Sidebar from './components/layout/Sidebar';
++ import Sidebar from './components/common/Sidebar';
 import Dashboard from './pages/Dashboard'; // ⬅️ Make sure this file exists
 import Questions from './pages/Questions'; // ⬅️ And this one
 import { ModelProvider } from './contexts/ModelContext';
